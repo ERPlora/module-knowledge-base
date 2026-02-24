@@ -1,0 +1,60 @@
+{% load djicons i18n %}
+
+<div class="side-sheet-header">
+    <h3 class="sheet-title">{% trans "Add Kbarticle" %}</h3>
+    <button class="sheet-close" @click="closePanel()">{% icon "close-outline" %}</button>
+</div>
+
+<div class="side-sheet-content">
+    <form id="add-kb_article-form"
+          hx-post="{% url 'knowledge_base:kb_article_add' %}"
+          hx-target="#datatable-body"
+          hx-swap="innerHTML"
+          @htmx:after-request="closePanel()"
+          class="flex flex-col gap-4 p-6">
+        {% csrf_token %}
+
+        {% if error %}
+        <div class="callout callout-error">
+            <div class="callout-content"><span class="callout-text">{{ error }}</span></div>
+        </div>
+        {% endif %}
+
+        <div>
+            <label class="text-sm font-medium mb-1 block">{% trans "Title" %}</label>
+            <input type="text" name="title" class="input input-sm w-full" placeholder="{% trans 'Title' %}">
+        </div>
+
+        <div>
+            <label class="text-sm font-medium mb-1 block">{% trans "Slug" %}</label>
+            <input type="text" name="slug" class="input input-sm w-full" placeholder="{% trans 'Slug' %}">
+        </div>
+
+        <div>
+            <label class="text-sm font-medium mb-1 block">{% trans "Content" %}</label>
+            <textarea name="content" class="textarea textarea-sm w-full" rows="3"></textarea>
+        </div>
+
+        <div>
+            <label class="text-sm font-medium mb-1 block">{% trans "Is Published" %}</label>
+            <label class="toggle color-success">
+                <input type="checkbox" name="is_published">
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+        </div>
+
+        <div>
+            <label class="text-sm font-medium mb-1 block">{% trans "View Count" %}</label>
+            <input type="number" name="view_count" class="input input-sm w-full"  placeholder="0">
+        </div>
+    </form>
+</div>
+
+<div class="side-sheet-footer">
+    <div class="flex justify-end gap-2">
+        <button type="button" class="btn btn-ghost btn-sm" @click="closePanel()">{% trans "Cancel" %}</button>
+        <button type="submit" form="add-kb_article-form" class="btn btn-sm color-primary">
+            {% icon "add-outline" %} {% trans "Add" %}
+        </button>
+    </div>
+</div>

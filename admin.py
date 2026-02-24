@@ -4,14 +4,13 @@ from .models import KBCategory, KBArticle
 
 @admin.register(KBCategory)
 class KBCategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'description', 'order', 'is_active']
-    readonly_fields = ['id', 'hub_id', 'created_at', 'updated_at']
-    ordering = ['-created_at']
-
+    list_display = ['name', 'slug', 'order', 'is_active', 'created_at']
+    search_fields = ['name', 'slug', 'description']
+    readonly_fields = ['created_at', 'updated_at']
 
 @admin.register(KBArticle)
 class KBArticleAdmin(admin.ModelAdmin):
-    list_display = ['category', 'title', 'slug', 'content', 'is_published']
-    readonly_fields = ['id', 'hub_id', 'created_at', 'updated_at']
-    ordering = ['-created_at']
+    list_display = ['category', 'title', 'slug', 'is_published', 'created_at']
+    search_fields = ['title', 'slug', 'content']
+    readonly_fields = ['created_at', 'updated_at']
 
