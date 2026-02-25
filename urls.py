@@ -7,6 +7,11 @@ urlpatterns = [
     # Dashboard
     path('', views.dashboard, name='dashboard'),
 
+    # Navigation tab aliases
+    path('articles/', views.kb_categories_list, name='articles'),
+    path('categories/', views.dashboard, name='categories'),
+
+
     # KBCategory
     path('kb_categories/', views.kb_categories_list, name='kb_categories_list'),
     path('kb_categories/add/', views.kb_category_add, name='kb_category_add'),
