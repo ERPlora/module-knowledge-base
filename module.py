@@ -30,3 +30,16 @@ PERMISSIONS = [
 'knowledge_base.delete_kbarticle',
 'knowledge_base.manage_settings',
 ]
+
+ROLE_PERMISSIONS = {
+    "admin": ["*"],
+    "manager": [
+        "add_kbarticle",
+        "change_kbarticle",
+        "view_kbarticle",
+    ],
+    "employee": [
+        "add_kbarticle",
+        "view_kbarticle",
+    ],
+}
