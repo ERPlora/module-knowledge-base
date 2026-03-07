@@ -1,0 +1,63 @@
+{% load djicons i18n %}
+<div data-back-url="{% url 'knowledge_base:kb_articles_list' %}" hidden></div>
+
+<div class="p-4">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">{% trans "Edit Kbarticle" %}</h1>
+        <div class="flex gap-2">
+            <a class="btn btn-ghost btn-sm"
+               hx-get="{% url 'knowledge_base:kb_articles_list' %}"
+               hx-target="#main-content-area"
+               hx-push-url="true">
+                {% trans "Cancel" %}
+            </a>
+            <button type="submit" form="edit-kb_article-form" class="btn btn-sm color-primary">
+                {% icon "checkmark-outline" %}
+                {% trans "Save" %}
+            </button>
+        </div>
+    </div>
+
+        {% if error %}
+        <div class="callout callout-error">
+            <div class="callout-content"><span class="callout-text">{{ error }}</span></div>
+        </div>
+        {% endif %}
+    <!-- Form -->
+    <form id="edit-kb_article-form"
+          hx-post="{% url 'knowledge_base:kb_article_edit' obj.id %}" class="max-w-2xl">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body flex flex-col gap-4">
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Title" %}</label>
+                <input type="text" name="title" class="input input-sm w-full" value="{{ obj.title }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Slug" %}</label>
+                <input type="text" name="slug" class="input input-sm w-full" value="{{ obj.slug }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Content" %}</label>
+                <textarea name="content" class="textarea textarea-sm w-full" rows="3">{{ obj.content }}</textarea>
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Is Published" %}</label>
+                <label class="toggle color-success">
+                <input type="checkbox" name="is_published" {% if obj.is_published %}checked{% endif %}>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "View Count" %}</label>
+                <input type="number" name="view_count" class="input input-sm w-full" value="{{ obj.view_count }}">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
